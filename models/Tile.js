@@ -29,11 +29,23 @@ const tileSchema = new mongoose.Schema({
     ref: 'User',
     required: 'The user this tile belongs to must be supplied.',
     index: true
-  },
-  created: {
-    type: Date,
-    default: Date.now
   }
+}, {
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 })
+
+tileSchema.statics.findByPhase = (phaseId, next) => {
+  let query = this.findOne()
+  Phase.findOne({ 'phase': phaseId }, (err, column) => {
+    query.where(
+      {
+        phase: column._id
+      }
+    ).exec(next)
+  })
+  return query
+}
 
 module.exports = mongoose.model('Tile', tileSchema)

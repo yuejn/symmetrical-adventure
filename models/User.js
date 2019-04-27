@@ -13,13 +13,9 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     trim: true,
     required: 'Please enter an email address.'
-  },
-  tiles: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Tile'
-    }
-  ]
+  }
+}, {
+  timestamps: true
 })
 
-module.exports = mongoose.model('Tile', tileSchema)
+module.exports = mongoose.model('User', userSchema)

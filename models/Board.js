@@ -12,10 +12,31 @@ const boardSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  created: {
-    type: Date,
-    default: Date.now
-  }
+}, {
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 })
+
+boardSchema.virtual('phases', {
+  ref: 'Phase',
+  localField: '_id',
+  foreignField: 'board'
+})
+
+boardSchema.virtual('tiles', {
+  ref: 'Tile',
+  localField: '_id',
+  foreignField: 'board'
+})
+
+function autopopulate(next) {
+  this.populate('phases')
+  this.populate('tiles')
+  next()
+}
+
+boardSchema.pre('find', autopopulate)
+boardSchema.pre('findOne', autopopulate)
 
 module.exports = mongoose.model('Board', boardSchema)

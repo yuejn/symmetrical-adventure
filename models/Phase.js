@@ -17,11 +17,27 @@ const phaseSchema = new mongoose.Schema({
     ref: 'Board',
     required: 'The board this phase belongs to must be supplied.',
     index: true
-  },
-  created: {
-    type: Date,
-    default: Date.now
   }
+},{
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 })
+
+
+phaseSchema.virtual('tiles', {
+  ref: 'Tile',
+  localField: '_id',
+  foreignField: 'phase'
+})
+
+function autopopulate(next) {
+  this.populate('phases')
+  this.populate('tiles')
+  next()
+}
+
+phaseSchema.pre('find', autopopulate)
+phaseSchema.pre('findOne', autopopulate)
 
 module.exports = mongoose.model('Phase', phaseSchema)
