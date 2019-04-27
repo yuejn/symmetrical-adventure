@@ -4,10 +4,12 @@
   "description": "Simple Trello-like clone for a project management tool. ",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "NODE_ENV=test nodemon --exec \"mocha -S tests\"",
     "start": "node ./index.js",
     "watch": "nodemon ./index.js",
-    "dev": "npm run watch"
+    "dev": "npm run watch",
+    "sample": "node ./data/load-data.js",
+    "truncate": "node ./data/load-data.js --delete"
   },
   "author": "yuejn",
   "license": "ISC",
@@ -18,9 +20,11 @@
     "nodemon": "^1.18.11"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "dotenv": "^7.0.0",
-    "eslint-config-airbnb": "^17.1.0",
     "express": "^4.16.4",
-    "mongoose": "^5.5.4"
+    "express-validator": "^5.3.1",
+    "mongoose": "^5.5.4",
+    "slugs": "^0.1.3"
   }
 }
