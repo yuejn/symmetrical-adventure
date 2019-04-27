@@ -4,6 +4,8 @@ This is the backend (API) for a simple project management tool. The user needs t
 
 There can be multiple `Board`s (e.g. Spring, Summer, Autumn, Winter). Every `Board` has `Phase`s (e.g. Flowcharts, Wireframes etc). A project is represented in a `Tile` which can be moved along the `Phase`s. When the user calls `/board` it should retrieve its associated `Phase`s and the phase's associated `Tile`s. Only authenticated users, however, can create, update, or delete a `Board`, `Phase`, or `Tile`.
 
+*Example*: https://calm-badlands-76166.herokuapp.com/board/5cc461a05bf1ef00171a9c1d
+
 ## Instructions
 
 1. Connect to the database and create schemas/models
@@ -97,3 +99,4 @@ curl --request POST \
 * _Tile_ should also include information like _TeamMembers_, _Client_, and associated URLs.
 * Improve authentication — and figure out a nice way to check authentication on routes, and to stub the tests.
 * Tiles on creation can be assigned a phase through a name (e.g. "Flowcharts") but moving it (through `PATCH`) requires a phase ID. It should also be moveable via name. Default phases should be the 'first' phase.
+* JSON responses should be cleaned up to only show the essentials — and `GET /board` should only show `board.phases` and not also `board.tiles` because they are already shown in `board.phases`.

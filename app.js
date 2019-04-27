@@ -33,11 +33,18 @@ app.use(errorHandlers.productionErrors);
 
 app.set('port', process.env.PORT || 3000)
 
-mongoose.connect(process.env.DATABASE, {
-  useNewUrlParser: true,
-  dbName: 'projects_' + process.env.NODE_ENV.toLowerCase(),
-  useFindAndModify: false
-})
+if (process.env.NODE_ENV == 'production') {
+  mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useFindAndModify: false
+  })
+} else {
+  mongoose.connect(process.env.DATABASE, {
+    useNewUrlParser: true,
+    dbName: 'projects_' + process.env.NODE_ENV.toLowerCase(),
+    useFindAndModify: false
+  })
+}
 mongoose.Promise = global.Promise
 mongoose.set('useCreateIndex', true)
 const db = mongoose.connection
