@@ -38,7 +38,7 @@ exports.register = (req, res) => {
           if(err) throw err
           newUser.password = hash
           newUser.save()
-            .then(user => res.json(user))
+            .then(user => res.status(201).send())
             .catch(err => res.status(400).send({ error: err}))
         })
       })
