@@ -1,14 +1,18 @@
 require('dotenv').config()
 
-const mongoose = require('mongoose')
 const fs = require('fs')
 const join = require('path').join
+const mongoose = require('mongoose')
+const passport = require('passport')
 const express = require('express')
 const bodyParser = require('body-parser')
 const expressValidator = require('express-validator')
 const errorHandlers = require('./handlers/errorHandlers');
 const models = join(__dirname, 'models')
 const app = express()
+
+app.use(passport.initialize())
+require('./passport-config')(passport)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))

@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     trim: true,
     required: 'Please enter an email address.'
+  },
+  password: {
+    type: String,
+    required: true
   }
 }, {
   timestamps: true
